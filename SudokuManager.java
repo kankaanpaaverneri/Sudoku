@@ -1,16 +1,16 @@
 import java.util.Random;
 
+enum ScanResult
+{
+    ROW, COLUMN,
+    BOX, ZERO, NOT_FOUND
+}
+
 public class SudokuManager
 {
     private static int[][] grid;
     private static int height, width;
     private static int swapNumberStackFrameCounter = 0;
-
-    enum ScanResult
-    {
-        ROW, COLUMN,
-        BOX, ZERO, NOT_FOUND
-    }
 
     //Constructors
     public SudokuManager()
@@ -362,22 +362,19 @@ public class SudokuManager
     //Return true if sudoku is solved
     public static boolean isSudokuSolved()
     {
-        boolean sudokuSolved = false;
         for(int column = 0; column < getHeight(); column++)
         {
             for(int row = 0; row < getWidth(); row++)
             {
-                if(grid[column][row] != 0)
-                    sudokuSolved = true;
-                else
-                    sudokuSolved = false;
+                if(grid[column][row] == 0)
+                    return false;
             }
         }
-        return sudokuSolved;
+        return true;
     }
 
     //Displays Grid in to the console
-    public void displayGrid()
+    public static void displayGrid()
     {
         for(int i = 0; i < getHeight(); i++)
         {
