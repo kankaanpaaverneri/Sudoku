@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class GUI extends JFrame implements ActionListener, KeyListener
 {
-    private static JPanel panel;
+    private static JPanel[][] panels;
     private static JToggleButton[][] buttons;
 
     public GUI()
@@ -19,26 +19,34 @@ public class GUI extends JFrame implements ActionListener, KeyListener
         this.setTitle("Sudoku");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
+        this.setLayout(new GridLayout(3, 3, 20, 20));
         addPanelAttributes();
         addButtonsToPanel();
-        this.add(panel);
         this.addKeyListener(this);
         this.setVisible(true);
     }
 
     //Generates panel for the frame
-    private static void addPanelAttributes()
+    private void addPanelAttributes()
     {
-        panel = new JPanel();
-        panel.setSize(550, 550);
-        panel.setBackground(Color.LIGHT_GRAY);
-        panel.setLayout(new GridLayout(9, 9, 10, 10));
+        panels = new JPanel[3][3];
+        for(int column = 0; column < SudokuManager.getHeight() / 3; column++)
+        {
+            for(int row = 0; row < SudokuManager.getWidth() / 3; row++)
+            {
+                panels[column][row] = new JPanel();
+                panels[column][row].setSize(60, 60);
+                panels[column][row].setLayout(new GridLayout(3, 3, 5, 5));
+                this.add(panels[column][row]);
+            }
+        }
     }
 
     //Generates buttons for the panel
     private void addButtonsToPanel()
     {
         buttons = new JToggleButton[SudokuManager.getHeight()][SudokuManager.getWidth()];
+        int panelColumn = 0, panelRow = 0;
         for(int column = 0; column < SudokuManager.getHeight(); column++)
         {
             for(int row = 0; row < SudokuManager.getWidth(); row++)
@@ -59,8 +67,15 @@ public class GUI extends JFrame implements ActionListener, KeyListener
                 buttons[column][row].setFocusable(false);
                 buttons[column][row].addActionListener(this);
                 buttons[column][row].setSelected(false);
-                panel.add(buttons[column][row]);
+
+                if(row == 3 || row == 6)
+                    panelRow++;
+                if(row == 0)
+                    panelRow = 0;
+                panels[panelColumn][panelRow].add(buttons[column][row]);
             }
+            if(column == 2 || column == 5)
+                panelColumn++;
         }
     }
 
