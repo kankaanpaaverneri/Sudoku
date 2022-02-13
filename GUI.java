@@ -148,6 +148,26 @@ public class GUI extends JFrame implements ActionListener, KeyListener
         return true;
     }
 
+    private static void isRedButtonsValid()
+    {
+        for(int column = 0; column < SudokuManager.getHeight(); column++)
+        {
+            for(int row = 0; row < SudokuManager.getWidth(); row++)
+            {
+                if(buttons[column][row].getBackground() == Color.RED)
+                {
+                    int redButtonValue = Integer.valueOf(buttons[column][row].getText());
+                    //Check if RED button is still invalid
+                    SudokuManager.setSudokuValue(0, column, row);
+                    if(SudokuManager.setSudokuValue(redButtonValue, column, row))
+                    {
+                        buttons[column][row].setBackground(Color.WHITE);
+                    }
+                }
+            }
+        }
+    }
+
     //Overrided Methods
 
     //Handles the mouse press events
@@ -186,6 +206,8 @@ public class GUI extends JFrame implements ActionListener, KeyListener
                     buttonPosition.getColumn(), buttonPosition.getRow());
                 
                 setButtonColor(isValid, selectedButton);
+
+                isRedButtonsValid(); //Checks all the red buttons if they still should be red
                 
                 selectedButton.setSelected(false);
                 enableAllButtons();
@@ -229,6 +251,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener
                         SudokuManager.setSudokuValue(0, column, row);
                         setButtonColor(true, buttons[column][row]);
 
+                        isRedButtonsValid(); //Checks all the red buttons if they still should be red
                         buttons[column][row].setSelected(false);
                         enableAllButtons();
                     }
