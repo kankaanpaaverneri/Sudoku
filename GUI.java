@@ -198,6 +198,9 @@ public class GUI extends JFrame implements ActionListener, KeyListener
             {
                 Position buttonPosition = new Position();
                 JToggleButton selectedButton = getSelectedButton(buttonPosition);
+                if(selectedButton.getText() == "") //If button is not selected then exit this function
+                    return;
+                
                 selectedButton.setText(Character.toString(validKey));
 
                 /*Sets a entered value to the SudokuManager object and
@@ -207,12 +210,13 @@ public class GUI extends JFrame implements ActionListener, KeyListener
                 
                 setButtonColor(isValid, selectedButton);
 
-                isRedButtonsValid(); //Checks all the red buttons if they still should be red
+                isRedButtonsValid(); //Checks all the other red buttons if they still should be red
                 
                 selectedButton.setSelected(false);
                 enableAllButtons();
             }
         }
+
         //If the Sudoku is solved, option dialog will pop up
         if(SudokuManager.isSudokuSolved() == true && isButtonsColorWhite())
         {
@@ -251,7 +255,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener
                         SudokuManager.setSudokuValue(0, column, row);
                         setButtonColor(true, buttons[column][row]);
 
-                        isRedButtonsValid(); //Checks all the red buttons if they still should be red
+                        isRedButtonsValid(); //Checks all the other red buttons if they still should be red
                         buttons[column][row].setSelected(false);
                         enableAllButtons();
                     }
