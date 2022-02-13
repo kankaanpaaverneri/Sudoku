@@ -120,6 +120,19 @@ public class GUI extends JFrame implements ActionListener, KeyListener
             button.setBackground(Color.WHITE);
     }
 
+    private static boolean isButtonsColorWhite()
+    {
+        for(int column = 0; column < SudokuManager.getHeight(); column++)
+        {
+            for(int row = 0; row < SudokuManager.getWidth(); row++)
+            {
+                if(buttons[column][row].getBackground() == Color.RED)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     //Overrided Methods
 
     //Handles the mouse press events
@@ -164,7 +177,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener
             }
         }
         //If the Sudoku is solved, option dialog will pop up
-        if(SudokuManager.isSudokuSolved() == true)
+        if(SudokuManager.isSudokuSolved() == true && isButtonsColorWhite())
         {
             String[] response = {"Kyllä"};
             JOptionPane.showOptionDialog(
