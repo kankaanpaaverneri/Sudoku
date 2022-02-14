@@ -92,7 +92,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener
         }
     }
 
-    //Enables all buttons that have the LIGHT_GRAY Color value
+    //Enables all buttons that does not have LIGHT_GRAY Color value
     private static void enableAllButtons()
     {
         for(int column = 0; column < SudokuManager.getHeight(); column++)
@@ -105,7 +105,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener
         }
     }
 
-    //Iterates through all the buttons an finds the button that is selected
+    //Iterates through all the buttons and finds the button that is selected
     private static JToggleButton getSelectedButton(Position selectedButtonPosition)
     {
         JToggleButton selectedButton = new JToggleButton();
