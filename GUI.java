@@ -192,7 +192,6 @@ public class GUI extends JFrame implements ActionListener, KeyListener {
         }
 
         //If the Sudoku is solved, option dialog will pop up
-        SudokuManager.displayGrid();
         if (SudokuManager.isSudokuSolved() == true) {
             String[] response = { "Kyllä" };
             JOptionPane.showOptionDialog(
